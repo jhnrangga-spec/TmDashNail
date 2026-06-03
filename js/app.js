@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateDate, 60000);
 
     navigateTo('dashboard');
+    updateBookingBadge();
 });
 
 function updateDate() {
@@ -36,7 +37,8 @@ function navigateTo(page) {
         dashboard: 'Dashboard',
         pos: 'Kasir / POS',
         services: 'Layanan',
-        transactions: 'Riwayat Transaksi'
+        transactions: 'Riwayat Transaksi',
+        bookings: 'Booking'
     };
     document.getElementById('page-title').textContent = titles[page] || '';
 
@@ -44,6 +46,7 @@ function navigateTo(page) {
     if (page === 'pos') renderPOS();
     if (page === 'services') renderServices();
     if (page === 'transactions') renderTransactions();
+    if (page === 'bookings') renderBookings();
 
     closeSidebar();
 }
@@ -376,6 +379,86 @@ function openModal(id) {
 
 function closeModal(id) {
     document.getElementById(id).classList.remove('active');
+}
+
+// Bookings
+function getBookings() {
+    return JSON.parse(localStorage.getItem('tmdash_bookings') || '[]');
+}
+
+function saveBookings(bookings) {
+    localStorage.setItem('tmdash_bookings', JSON.stringify(bookings));
+}
+
+function renderBookings() {
+    const bookings = getBookings();
+    const tbody = document.getElementById('bookings-table');
+    const today = getTodayStr();
+
+    const pending = bookings.filter(b => b.status === 'pending').length;
+    const confirmed = bookings.filter(b => b.status === 'confirmed').length;
+    const todayBookings = bookings.filter(b => b.date === today).length;
+
+    document.getElementById('stat-pending').textContent = pending;
+    document.getElementById('stat-confirmed').textContent = confirmed;
+    document.getElementById('stat-today-bookings').textContent = todayBookings;
+
+    if (bookings.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:30px;">Belum ada booking</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = bookings.slice().reverse().map(b => {
+        const statusBadge = {
+            pending: '<span class="badge badge-warning">Menunggu</span>',
+            confirmed: '<span class="badge badge-success">Dikonfirmasi</span>',
+            done: '<span class="badge badge-success">Selesai</span>',
+            cancelled: '<span class="badge badge-danger">Dibatalkan</span>'
+        };
+
+        return `<tr>
+            <td><strong>${b.id}</strong></td>
+            <td>${b.name}</td>
+            <td>${b.serviceName}<br><small style="color:var(--primary)">${formatRupiah(b.servicePrice)}</small></td>
+            <td>${formatDate(b.date + 'T00:00:00')}<br><small>${b.time} WIB</small></td>
+            <td>${b.phone}</td>
+            <td>${statusBadge[b.status] || statusBadge.pending}</td>
+            <td>
+                ${b.status === 'pending' ? `
+                    <button class="btn btn-success btn-sm" onclick="updateBookingStatus('${b.id}','confirmed')" title="Konfirmasi"><i class="fas fa-check"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="updateBookingStatus('${b.id}','cancelled')" title="Batalkan"><i class="fas fa-times"></i></button>
+                ` : ''}
+                ${b.status === 'confirmed' ? `
+                    <button class="btn btn-primary btn-sm" onclick="updateBookingStatus('${b.id}','done')" title="Selesai"><i class="fas fa-check-double"></i></button>
+                ` : ''}
+            </td>
+        </tr>`;
+    }).join('');
+}
+
+function updateBookingStatus(bookingId, status) {
+    const bookings = getBookings();
+    const idx = bookings.findIndex(b => b.id === bookingId);
+    if (idx !== -1) {
+        bookings[idx].status = status;
+        saveBookings(bookings);
+        renderBookings();
+        updateBookingBadge();
+    }
+}
+
+function updateBookingBadge() {
+    const bookings = getBookings();
+    const pending = bookings.filter(b => b.status === 'pending').length;
+    const badge = document.getElementById('booking-badge');
+    if (badge) {
+        if (pending > 0) {
+            badge.textContent = pending;
+            badge.style.display = 'inline-flex';
+        } else {
+            badge.style.display = 'none';
+        }
+    }
 }
 
 // Sidebar mobile
