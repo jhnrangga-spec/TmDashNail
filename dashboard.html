@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TmDash Nail & Beauty Studio - Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-icon"><i class="fas fa-spa"></i></div>
+                <h2>TmDash</h2>
+                <span>Nail & Beauty Studio</span>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-item active" data-page="dashboard" onclick="navigateTo('dashboard')">
+                    <i class="fas fa-home"></i> Dashboard
+                </div>
+                <div class="nav-item" data-page="pos" onclick="navigateTo('pos')">
+                    <i class="fas fa-cash-register"></i> Kasir / POS
+                </div>
+                <div class="nav-item" data-page="services" onclick="navigateTo('services')">
+                    <i class="fas fa-concierge-bell"></i> Layanan
+                </div>
+                <div class="nav-item" data-page="transactions" onclick="navigateTo('transactions')">
+                    <i class="fas fa-receipt"></i> Riwayat Transaksi
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar" id="user-initial">A</div>
+                    <div class="user-details">
+                        <h4 id="user-name">Admin</h4>
+                        <span id="user-role">Administrator</span>
+                    </div>
+                </div>
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Keluar
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="main-content">
+            <div class="topbar">
+                <div class="topbar-left">
+                    <button class="btn-menu" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+                    <h1 id="page-title">Dashboard</h1>
+                </div>
+                <div class="topbar-right">
+                    <div class="date-display">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span id="current-date"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-content">
+                <!-- Dashboard Page -->
+                <div class="page active" id="page-dashboard">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon pink"><i class="fas fa-wallet"></i></div>
+                            <div class="stat-info">
+                                <h3 id="stat-today-revenue">Rp 0</h3>
+                                <p>Pendapatan Hari Ini</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon blue"><i class="fas fa-shopping-bag"></i></div>
+                            <div class="stat-info">
+                                <h3 id="stat-today-tx">0</h3>
+                                <p>Transaksi Hari Ini</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon green"><i class="fas fa-concierge-bell"></i></div>
+                            <div class="stat-info">
+                                <h3 id="stat-services">0</h3>
+                                <p>Total Layanan</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange"><i class="fas fa-chart-line"></i></div>
+                            <div class="stat-info">
+                                <h3 id="stat-month-revenue">Rp 0</h3>
+                                <p>Pendapatan Bulan Ini</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3><i class="fas fa-clock"></i> Transaksi Terakhir</h3>
+                            <button class="btn btn-primary btn-sm" onclick="navigateTo('pos')">
+                                <i class="fas fa-plus"></i> Transaksi Baru
+                            </button>
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>No. Transaksi</th>
+                                        <th>Tanggal</th>
+                                        <th>Layanan</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent-transactions"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- POS Page -->
+                <div class="page" id="page-pos">
+                    <div class="pos-container">
+                        <div class="pos-services">
+                            <div class="pos-services-header">
+                                <h3><i class="fas fa-spa"></i> Pilih Layanan</h3>
+                                <div class="search-box">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" id="pos-search" placeholder="Cari layanan..." oninput="renderServiceCards()">
+                                </div>
+                            </div>
+                            <div class="category-filters" id="category-filters"></div>
+                            <div class="services-grid" id="services-grid"></div>
+                        </div>
+                        <div class="pos-cart">
+                            <div class="cart-header">
+                                <h3><i class="fas fa-shopping-cart"></i> Keranjang</h3>
+                                <button class="btn btn-danger btn-sm" onclick="clearCart()"><i class="fas fa-trash"></i> Kosongkan</button>
+                            </div>
+                            <div class="cart-items" id="cart-items"></div>
+                            <div class="cart-summary">
+                                <div class="cart-row"><span>Subtotal</span><span id="cart-subtotal">Rp 0</span></div>
+                                <div class="cart-row total"><span>Total</span><span id="cart-total">Rp 0</span></div>
+                            </div>
+                            <div class="cart-actions">
+                                <button class="btn btn-primary" onclick="processPayment()">
+                                    <i class="fas fa-check-circle"></i> Bayar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Services Page -->
+                <div class="page" id="page-services">
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3><i class="fas fa-list"></i> Daftar Layanan</h3>
+                            <button class="btn btn-primary" onclick="openAddService()">
+                                <i class="fas fa-plus"></i> Tambah Layanan
+                            </button>
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nama Layanan</th>
+                                        <th>Kategori</th>
+                                        <th>Harga</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="services-table"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transactions Page -->
+                <div class="page" id="page-transactions">
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3><i class="fas fa-receipt"></i> Semua Transaksi</h3>
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>No. Transaksi</th>
+                                        <th>Tanggal</th>
+                                        <th>Layanan</th>
+                                        <th>Total</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactions-table"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Service Modal -->
+    <div class="modal-overlay" id="service-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="service-modal-title">Tambah Layanan</h3>
+                <button class="modal-close" onclick="closeModal('service-modal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Nama Layanan</label>
+                    <input type="text" id="svc-name" placeholder="Contoh: Manicure Basic">
+                </div>
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <select id="svc-category">
+                        <option value="Nail Care">Nail Care</option>
+                        <option value="Nail Art">Nail Art</option>
+                        <option value="Beauty">Beauty</option>
+                        <option value="Eyelash">Eyelash</option>
+                        <option value="Waxing">Waxing</option>
+                        <option value="Paket">Paket</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Harga (Rp)</label>
+                    <input type="number" id="svc-price" placeholder="75000">
+                </div>
+                <div class="form-group">
+                    <label>Emoji</label>
+                    <input type="text" id="svc-emoji" placeholder="💅" maxlength="4">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('service-modal')">Batal</button>
+                <button class="btn btn-primary" onclick="saveService()"><i class="fas fa-save"></i> Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Receipt Modal -->
+    <div class="modal-overlay" id="receipt-modal">
+        <div class="modal" style="max-width:400px;">
+            <div class="modal-header">
+                <h3>Struk Pembayaran</h3>
+                <button class="modal-close" onclick="closeModal('receipt-modal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="receipt-body"></div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('receipt-modal')">Tutup</button>
+                <button class="btn btn-primary" onclick="printReceipt()"><i class="fas fa-print"></i> Cetak</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
