@@ -102,7 +102,7 @@ export default function LoginPage() {
               </button>
             </form>
             <div className="login-footer">
-              <p>Default: admin@tmdash.id / admin123</p>
+              <p>TmDash Nail &amp; Beauty Studio</p>
             </div>
           </div>
         </div>
