@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import { createClient } from '@/lib/supabase';
 import { formatRupiah, generateBookingId } from '@/lib/utils';
 
@@ -243,6 +244,10 @@ export default function LandingPage() {
               );
             })}
           </div>
+
+          <Link href="/login" className="btn btn-primary btn-sm nav-login-btn">
+            <i className="fas fa-sign-in-alt"></i> Login Admin
+          </Link>
 
           <button className="nav-toggle" onClick={() => setNavOpen(!navOpen)}>
             <i className={`fas ${navOpen ? 'fa-times' : 'fa-bars'}`}></i>

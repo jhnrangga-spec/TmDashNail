@@ -1115,7 +1115,8 @@ select option {
   border-bottom: 1px solid var(--border);
 }
 
-.nav-container {
+.nav-container,
+.navbar-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1160,6 +1161,11 @@ select option {
 .nav-link.active {
   color: #ffffff;
   background: rgba(233, 30, 140, 0.1);
+}
+
+.nav-login-btn {
+  margin-left: 12px;
+  white-space: nowrap;
 }
 
 .nav-toggle {
