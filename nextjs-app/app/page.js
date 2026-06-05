@@ -258,12 +258,8 @@ export default function LandingPage() {
 
       {/* ════════════════ HERO ════════════════ */}
       <section id="hero" className="hero">
-        <div className="hero-bg-logos">
-          {[...Array(12)].map((_, i) => (
-            <div key={i} className={`floating-logo floating-logo-${i + 1}`}>
-              <Image src="/logo.png" alt="" width={60} height={60} draggable={false} />
-            </div>
-          ))}
+        <div className="hero-bg-logo-single">
+          <Image src="/logo.png" alt="" width={500} height={500} draggable={false} />
         </div>
         <div className="container hero-content">
           <span className="hero-badge">
