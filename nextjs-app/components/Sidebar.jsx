@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
@@ -50,7 +51,9 @@ export default function Sidebar({ user, pendingBookings }) {
 
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="sidebar-brand">
-          <div className="logo-icon"><i className="fas fa-spa"></i></div>
+          <div className="logo-icon">
+            <Image src="/logo.png" alt="TmDash Logo" width={50} height={50} />
+          </div>
           <h2>TmDash</h2>
           <span>Nail & Beauty Studio</span>
         </div>

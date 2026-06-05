@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { createClient } from '@/lib/supabase';
 import { formatRupiah, generateBookingId } from '@/lib/utils';
 
@@ -217,7 +218,7 @@ export default function LandingPage() {
       <nav className={`navbar${scrolled ? ' navbar-scrolled' : ''}`}>
         <div className="container navbar-inner">
           <a href="#hero" className="nav-brand">
-            <i className="fas fa-spa"></i>
+            <Image src="/logo.png" alt="TmDash Logo" width={36} height={36} style={{ borderRadius: '50%' }} />
             <span>TmDash</span>
             <small>Nail &amp; Beauty</small>
           </a>
@@ -259,7 +260,7 @@ export default function LandingPage() {
       <section id="hero" className="hero">
         <div className="container hero-content">
           <span className="hero-badge">
-            <i className="fas fa-spa"></i> Nail &amp; Beauty Studio
+            <Image src="/logo.png" alt="Logo" width={20} height={20} style={{ borderRadius: '50%', display: 'inline-block', verticalAlign: 'middle', marginRight: 6 }} /> Nail &amp; Beauty Studio
           </span>
           <h1>
             Tampil Cantik Mulai dari <span className="text-gradient">Ujung Jari</span>
@@ -612,7 +613,8 @@ export default function LandingPage() {
           <div className="footer-grid">
             <div className="footer-brand">
               <h3>
-                <i className="fas fa-spa"></i> TmDash
+                <Image src="/logo.png" alt="TmDash Logo" width={28} height={28} style={{ borderRadius: '50%', display: 'inline-block', verticalAlign: 'middle', marginRight: 8 }} />
+                TmDash
               </h3>
               <p>
                 Studio nail art dan kecantikan terpercaya. Tampil cantik dan percaya diri mulai dari

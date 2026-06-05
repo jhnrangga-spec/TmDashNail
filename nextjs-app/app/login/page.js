@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase';
 
@@ -38,7 +39,7 @@ export default function LoginPage() {
         <div className="login-left">
           <div className="brand-section">
             <div className="logo">
-              <i className="fas fa-spa"></i>
+              <Image src="/logo.png" alt="TmDash Logo" width={80} height={80} style={{ borderRadius: '50%' }} />
             </div>
             <h1>TmDash</h1>
             <h2>Nail & Beauty Studio</h2>
