@@ -29,8 +29,8 @@ export default function Receipt({ transaction, onClose }) {
           <div className="receipt">
             <div className="receipt-header" style={{ textAlign: "center" }}>
               <h2 style={{ color: "#e91e8c" }}>TmDash Nail &amp; Beauty Studio</h2>
-              <p>Jl. Contoh Alamat No. 123</p>
-              <p>Telp: 0812-3456-7890</p>
+              <p>Jl. Salero</p>
+              <p>Telp: 0823-4300-2255</p>
             </div>
 
             <hr className="receipt-divider" />

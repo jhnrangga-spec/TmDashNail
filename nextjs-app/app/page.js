@@ -474,7 +474,7 @@ export default function LandingPage() {
 
               <div className="booking-location">
                 <h4><i className="fas fa-map-marker-alt"></i> Lokasi</h4>
-                <p>Jl. Kecantikan No. 123, Jakarta Selatan</p>
+                <p>Jl. Salero</p>
               </div>
             </div>
 
@@ -651,8 +651,8 @@ export default function LandingPage() {
 
             <div className="footer-contact">
               <h4>Kontak</h4>
-              <p><i className="fas fa-map-marker-alt"></i> Jl. Kecantikan No. 123, Jakarta Selatan</p>
-              <p><i className="fas fa-phone"></i> +62 812-3456-7890</p>
+              <p><i className="fas fa-map-marker-alt"></i> Jl. Salero</p>
+              <p><i className="fas fa-phone"></i> 0823-4300-2255</p>
               <p><i className="fas fa-envelope"></i> hello@tmdash.id</p>
               <p><i className="fas fa-clock"></i> Sen-Sab 09:00-21:00</p>
             </div>
