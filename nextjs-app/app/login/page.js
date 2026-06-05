@@ -35,6 +35,13 @@ export default function LoginPage() {
 
   return (
     <div className="login-page">
+      <div className="login-bg-logos">
+        {[...Array(8)].map((_, i) => (
+          <div key={i} className={`floating-logo floating-logo-${i + 1}`}>
+            <Image src="/logo.png" alt="" width={50} height={50} draggable={false} />
+          </div>
+        ))}
+      </div>
       <div className="login-container">
         <div className="login-left">
           <div className="brand-section">

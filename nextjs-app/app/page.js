@@ -258,6 +258,13 @@ export default function LandingPage() {
 
       {/* ════════════════ HERO ════════════════ */}
       <section id="hero" className="hero">
+        <div className="hero-bg-logos">
+          {[...Array(12)].map((_, i) => (
+            <div key={i} className={`floating-logo floating-logo-${i + 1}`}>
+              <Image src="/logo.png" alt="" width={60} height={60} draggable={false} />
+            </div>
+          ))}
+        </div>
         <div className="container hero-content">
           <span className="hero-badge">
             <Image src="/logo.png" alt="Logo" width={20} height={20} style={{ borderRadius: '50%', display: 'inline-block', verticalAlign: 'middle', marginRight: 6 }} /> Nail &amp; Beauty Studio
