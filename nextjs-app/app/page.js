@@ -3,11 +3,13 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useTheme } from '@/components/ThemeProvider';
 import { createClient } from '@/lib/supabase';
 import { formatRupiah, generateBookingId } from '@/lib/utils';
 
 export default function LandingPage() {
   const supabase = createClient();
+  const { theme, toggleTheme } = useTheme();
 
   // ── State ──
   const [services, setServices] = useState([]);
@@ -245,6 +247,10 @@ export default function LandingPage() {
               );
             })}
           </div>
+
+          <button className="btn-theme-nav" onClick={toggleTheme} title={theme === 'dark' ? 'Mode Terang' : 'Mode Gelap'}>
+            <i className={`fas ${theme === 'dark' ? 'fa-sun' : 'fa-moon'}`}></i>
+          </button>
 
           <Link href="/login" className="btn btn-primary btn-sm nav-login-btn">
             <i className="fas fa-sign-in-alt"></i> Login Admin

@@ -5,11 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
+import { useTheme } from "@/components/ThemeProvider";
 
 export default function Sidebar({ user, pendingBookings }) {
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClient();
+  const { theme, toggleTheme } = useTheme();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -84,6 +86,10 @@ export default function Sidebar({ user, pendingBookings }) {
               <span>{user?.role || "Staff"}</span>
             </div>
           </div>
+          <button className="btn-theme-toggle" onClick={toggleTheme}>
+            <i className={`fas ${theme === "dark" ? "fa-sun" : "fa-moon"}`}></i>
+            <span>{theme === "dark" ? "Mode Terang" : "Mode Gelap"}</span>
+          </button>
           <button className="btn-logout" onClick={handleLogout}>
             <i className="fas fa-sign-out-alt"></i>
             <span>Keluar</span>
