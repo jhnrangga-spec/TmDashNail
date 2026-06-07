@@ -32,6 +32,7 @@ export default function Sidebar({ user, pendingBookings }) {
     { href: "/dashboard/services", icon: "fa-concierge-bell", label: "Layanan" },
     { href: "/dashboard/transactions", icon: "fa-receipt", label: "Riwayat Transaksi" },
     { href: "/dashboard/bookings", icon: "fa-calendar-check", label: "Booking" },
+    { href: "/dashboard/reports", icon: "fa-chart-bar", label: "Laporan" },
   ];
 
   const isActive = (href, exact) => {
